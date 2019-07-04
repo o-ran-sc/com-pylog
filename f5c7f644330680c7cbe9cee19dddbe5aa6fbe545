@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d6e1edb7_a55a2257",
+        "filename": "README.md",
+        "patchSetId": 1
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1000017
+      },
+      "writtenOn": "2019-07-04T10:59:20Z",
+      "side": 1,
+      "message": "Add mention about pypi",
+      "revId": "f5c7f644330680c7cbe9cee19dddbe5aa6fbe545",
+      "serverId": "84e4e190-e623-4c37-9eda-58b1937c1b53",
+      "unresolved": true
+    }
+  ]
+}
