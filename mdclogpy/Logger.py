@@ -111,8 +111,10 @@ class Logger():
         level -- logging level. Log messages with lower severity will be
                  filtered.
         """
-        if level in Level:
-            self.current_level = level
+        try:
+            self.current_level = Level(level)
+        except ValueError:
+            pass
 
     def get_level(self) -> Level:
         """Return the current logging level."""
