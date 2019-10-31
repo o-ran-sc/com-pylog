@@ -102,3 +102,8 @@ To run the unit tests run the following command in the package directory::
 `
 python3 -m unittest discover
 `
+
+CI
+--
+
+The ci is done with the `tox` tool. See `tox.ini` file for details.
