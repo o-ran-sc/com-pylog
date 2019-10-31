@@ -102,3 +102,10 @@ To run the unit tests run the following command in the package directory::
 `
 python3 -m unittest discover
 `
+
+CI
+--
+
+The `ci` directory contains a Docker file that, when built, runs the unit tests for the repository.
+It does not publish anything. Publishing a pypi version of the library is done manually
+as it requires giving a password.
