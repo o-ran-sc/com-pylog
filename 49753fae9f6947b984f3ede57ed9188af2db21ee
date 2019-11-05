@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a4d49e42_3429c70b",
+        "filename": "releases/pypi-release.yaml",
+        "patchSetId": 1
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2019-11-05T14:28:57Z",
+      "side": 1,
+      "message": "Put this in single quotes.  The value 3.7 is a valid floating-point number, YAML treats it as such, so it fails to validate against type String.",
+      "range": {
+        "startLine": 5,
+        "startChar": 16,
+        "endLine": 5,
+        "endChar": 19
+      },
+      "revId": "49753fae9f6947b984f3ede57ed9188af2db21ee",
+      "serverId": "84e4e190-e623-4c37-9eda-58b1937c1b53",
+      "unresolved": true
+    }
+  ]
+}
