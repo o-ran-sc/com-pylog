@@ -22,6 +22,30 @@
       "revId": "49753fae9f6947b984f3ede57ed9188af2db21ee",
       "serverId": "84e4e190-e623-4c37-9eda-58b1937c1b53",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "35b7b3ba_48257263",
+        "filename": "releases/pypi-release.yaml",
+        "patchSetId": 1
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2019-11-05T14:32:17Z",
+      "side": 1,
+      "message": "Even better, try just 3.  I\u0027m not certain if that has to go in quotes.",
+      "parentUuid": "a4d49e42_3429c70b",
+      "range": {
+        "startLine": 5,
+        "startChar": 16,
+        "endLine": 5,
+        "endChar": 19
+      },
+      "revId": "49753fae9f6947b984f3ede57ed9188af2db21ee",
+      "serverId": "84e4e190-e623-4c37-9eda-58b1937c1b53",
+      "unresolved": true
     }
   ]
 }
