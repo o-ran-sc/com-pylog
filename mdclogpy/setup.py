@@ -34,6 +34,7 @@ setup(name='mdclogpy',
       ],
       url='https://gerrit.o-ran-sc.org/r/admin/repos/com/pylog',
       author_email='kturunen@nokia.com',
+      author='kturunen',
       license='Apache Software License',
       packages=['mdclogpy'],
       zip_safe=False)
