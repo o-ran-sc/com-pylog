@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "24fea64c_012d70ea",
+        "filename": "mdclogpy/setup.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2019-11-06T14:24:13Z",
+      "side": 1,
+      "message": "Please add:\n\n    author\u003d\u0027Katri Turunen\u0027,",
+      "range": {
+        "startLine": 36,
+        "startChar": 0,
+        "endLine": 36,
+        "endChar": 3
+      },
+      "revId": "8da8d66b7033e96c6ec70e8688b850c381018052",
+      "serverId": "84e4e190-e623-4c37-9eda-58b1937c1b53",
+      "unresolved": true
+    }
+  ]
+}
