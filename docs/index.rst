@@ -39,6 +39,7 @@ Welcome to O-RAN SC pylog Documentation
    :caption: Contents:
 
    overview.rst
+   developer-guide.rst
    release-notes.rst
 
 
