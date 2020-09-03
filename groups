@@ -1,4 +1,5 @@
 # UUID                                                                    	Group Name
 #
 add1d629e64dce7097223c93ca6e710c1460b5ba                                  	GitHub Replication
+b8adffc7589f226737e32a5cf2e784fdb67e0bb0                                  	saml/oran-gerrit-com-pylog-committers
 ldap:cn=oran-gerrit-com-pylog-committers,ou=Groups,dc=freestandards,dc=org	ldap/oran-gerrit-com-pylog-committers
