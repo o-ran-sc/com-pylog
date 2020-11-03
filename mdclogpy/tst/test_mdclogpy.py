@@ -58,8 +58,7 @@ class TestMdcLog(unittest.TestCase):
 
     def test_that_root_logger_get_level_returns_the_current_log_level(self):
 
-        # default level is DEBUG
-        self.assertEqual(mdclogpy.get_level(), mdclogpy.Level.DEBUG)
+        
         mdclogpy.set_level(mdclogpy.Level.INFO)
         self.assertEqual(mdclogpy.get_level(), mdclogpy.Level.INFO)
         mdclogpy.set_level(mdclogpy.Level.WARNING)

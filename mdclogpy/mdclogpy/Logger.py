@@ -30,6 +30,9 @@ from enum import IntEnum
 import sys
 import json
 import time
+import os
+import inotify.adapters
+import threading
 
 
 class Level(IntEnum):
@@ -58,7 +61,7 @@ class Logger():
     name -- name of the component. The name will appear as part of the log
             entries.
     """
-    def __init__(self, name: str = sys.argv[0], level: Level = Level.DEBUG):
+    def __init__(self, name: str = sys.argv[0], level: Level = Level.ERROR):
         """Initialize a Logger instance.
 
             Keyword arguments:
@@ -68,6 +71,22 @@ class Logger():
         self.procname = name
         self.current_level = level
         self.mdc = {}
+        
+
+    # Pass configmap_monitor = True to monitor configmap to change logs dynamically using configmap
+    def mdclog_format_init(self,configmap_monitor=False):
+
+        self.mdc = {"SYSTEM_NAME":"","HOST_NAME":"","SERVICE_NAME":"","CONTAINER_NAME":"","POD_NAME":""}
+        self.get_env_params_values()
+        try:
+            self.filename = os.environ['CONFIG_MAP_NAME']
+            self.dirname = str(self.filename[:self.filename.rindex('/')])
+            if configmap_monitor == True:
+                self.register_log_change_notify()
+            
+        except Exception as e:
+            print("Unable to Add Watch on ConfigMap File",e)
+
 
     def _output_log(self, log: str):
         """Output the log, currently to stdout."""
@@ -135,6 +154,90 @@ class Logger():
         value -- MDC value
         """
         self.mdc[key] = value
+        
+
+    def get_env_params_values(self):
+
+        try:
+            self.mdc['SYSTEM_NAME'] = os.environ['SYSTEM_NAME']
+        except:
+            self.mdc['SYSTEM_NAME'] = ""
+
+        try:
+            self.mdc['HOST_NAME'] = os.environ['HOST_NAME']
+        except:
+            self.mdc['HOST_NAME'] = ""
+
+        try:
+            self.mdc['SERVICE_NAME'] = os.environ['SERVICE_NAME']
+        except:
+            self.mdc['SERVICE_NAME'] = ""
+    
+        try:
+            self.mdc['CONTAINER_NAME'] = os.environ['CONTAINER_NAME']
+        except:
+            self.mdc['CONTAINER_NAME'] = ""
+
+        try:
+            self.mdc['POD_NAME'] = os.environ['POD_NAME']
+        except:
+            self.mdc['POD_NAME'] = ""
+
+
+    
+    def update_mdc_log_level_severity(self,level):
+        severity_level = Level.DEBUG
+
+        if(level == ""):
+            print("Invalid Log Level defined in ConfigMap")
+        elif((level.upper() == "ERROR") or (level.upper() == "ERR" )):
+            severity_level = Level.ERROR
+        elif((level.upper() == "WARNING") or (level.upper() == "WARN")):
+            severity_level = Level.WARNING
+        elif(level.upper() == "INFO"):
+            severity_level = Level.INFO
+        elif(level.upper() == "DEBUG"):
+            severity_level = Level.DEBUG
+        
+        self.set_level(severity_level)
+      
+        
+        
+
+
+    def parse_file(self):
+        src = open(self.filename,'r')
+        level = ""
+        for line in src:
+            if 'log-level:' in line:
+                level_tmp = str(line.split(':')[-1]).strip()
+                level = level_tmp
+                break
+        src.close()
+        self.update_mdc_log_level_severity(level)
+        
+
+
+
+    def monitor_loglevel_change_handler(self):
+        i = inotify.adapters.Inotify()
+        i.add_watch(self.dirname)
+        for event in i.event_gen():
+            if (event is not None) and ('IN_MODIFY' in str(event[1]) or 'IN_DELETE' in str(event[1])):
+                self.parse_file()
+
+
+    def register_log_change_notify(self):
+        t1 = threading.Thread(target=self.monitor_loglevel_change_handler)
+        t1.daemon = True
+        try:
+            t1.start() 
+        except (KeyboardInterrupt, SystemExit):
+            cleanup_stop_thread()
+            sys.exit()
+        
+
+
 
     def get_mdc(self, key: str) -> Value:
         """Return logger's MDC value with the given key or None."""
