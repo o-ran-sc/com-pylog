@@ -20,6 +20,8 @@
 import unittest
 from unittest.mock import patch
 import sys
+import os
+import time
 
 from mdclogpy import Logger
 from mdclogpy import Level
@@ -39,8 +41,8 @@ class TestMdcLog(unittest.TestCase):
 
     def test_that_get_level_returns_the_current_log_level(self):
 
-        # default level is DEBUG
-        self.assertEqual(self.logger.get_level(), Level.DEBUG)
+        # default level is ERROR
+        self.assertEqual(self.logger.get_level(), Level.ERROR)
         self.logger.set_level(Level.INFO)
         self.assertEqual(self.logger.get_level(), Level.INFO)
         self.logger.set_level(Level.WARNING)
@@ -115,7 +117,7 @@ class TestMdcLog(unittest.TestCase):
     def test_that_log_contains_correct_timestamp(self, output_mock, mock_time):
 
         mock_time.return_value = 1554806251.4388545
-        self.logger.info("timestamp test")
+        self.logger.error("timestamp test")
 
         logs = TestMdcLogUtils.get_logs_as_json(output_mock.call_args_list)
         self.assertEqual(logs[0]["ts"], 1554806251439)
@@ -123,8 +125,9 @@ class TestMdcLog(unittest.TestCase):
     @patch('mdclogpy.Logger._output_log')
     def test_that_log_contains_correct_message(self, output_mock):
 
-        self.logger.info("message test")
+        self.logger.error("message test")
         logs = TestMdcLogUtils.get_logs_as_json(output_mock.call_args_list)
+        print(logs)
         self.assertEqual(logs[0]["msg"], "message test")
 
     @patch('mdclogpy.Logger._output_log')
@@ -142,10 +145,12 @@ class TestMdcLog(unittest.TestCase):
 
     @patch('mdclogpy.Logger._output_log')
     def test_that_empty_mdc_is_logged_correctly(self, output_mock):
-
+        self.logger.mdclog_format_init(configmap_monitor=True)
         self.logger.error("empty mdc test")
         logs = TestMdcLogUtils.get_logs_as_json(output_mock.call_args_list)
-        self.assertEqual(logs[0]["mdc"], {})
+        self.assertEqual(logs[0]["mdc"], {'SYSTEM_NAME': '', 'HOST_NAME': '', 'SERVICE_NAME': '', 'CONTAINER_NAME': '', 'POD_NAME': ''})
+    
+
 
     @patch('mdclogpy.Logger._output_log')
     def test_that_mdc_values_are_logged_correctly(self, output_mock):
@@ -157,6 +162,21 @@ class TestMdcLog(unittest.TestCase):
         logs = TestMdcLogUtils.get_logs_as_json(output_mock.call_args_list)
         self.assertEqual(logs[0]["mdc"]["key1"], "value1")
         self.assertEqual(logs[0]["mdc"]["key2"], "value2")
+
+    @patch('mdclogpy.Logger._output_log')
+    def test_log_level_change_from_configmap_file(self,output_mock):
+        self.logger.mdclog_format_init(configmap_monitor=True)
+        self.logger.filename= '/tmp/log-level'
+        self.logger.dirname='/tmp'
+        self.logger.register_log_change_notify()
+        self.assertEqual(mdclogpy.get_level(), mdclogpy.Level.ERROR)        
+        src = open('/tmp/log-level','w')
+        src.write('log-level: debug')
+        src.close()
+        time.sleep(2)
+
+        self.assertEqual(self.logger.get_level(), 10)
+
 
     def test_that_mdc_values_can_be_added_and_removed(self):
 
@@ -183,8 +203,8 @@ class TestMdcLog(unittest.TestCase):
         mdclogpy.add_mdc("key", "value")
 
         logger1.error("error msg")
-        logger2.warning("warning msg")
-        mdclogpy.info("info msg")
+        logger2.error("warning msg")
+        mdclogpy.error("info msg")
 
         logs = TestMdcLogUtils.get_logs_as_json(output_mock.call_args_list)
         self.assertEqual(3, output_mock.call_count)
@@ -197,14 +217,14 @@ class TestMdcLog(unittest.TestCase):
         self.assertEqual(len(logs[0]["mdc"]), 2)
 
         self.assertEqual(logs[1]["id"], "logger2")
-        self.assertEqual(logs[1]["crit"], "WARNING")
+        self.assertEqual(logs[1]["crit"], "ERROR")
         self.assertEqual(logs[1]["msg"], "warning msg")
         self.assertEqual(logs[1]["mdc"]["logger2_key1"], "logger2_value1")
         self.assertEqual(logs[1]["mdc"]["logger2_key2"], "logger2_value2")
         self.assertEqual(len(logs[1]["mdc"]), 2)
 
         self.assertEqual(logs[2]["id"], sys.argv[0])
-        self.assertEqual(logs[2]["crit"], "INFO")
+        self.assertEqual(logs[2]["crit"], "ERROR")
         self.assertEqual(logs[2]["msg"], "info msg")
         self.assertEqual(logs[2]["mdc"]["key"], "value")
         self.assertEqual(len(logs[2]["mdc"]), 1)

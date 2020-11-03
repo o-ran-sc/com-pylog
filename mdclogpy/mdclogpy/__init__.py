@@ -38,6 +38,10 @@ def log(level: Level, message: str):
     _root_logger.log(level, message)
 
 
+def mdclog_format_init(configmap_monitor=False):
+    _root_logger.mdclog_format_init(configmap_monitor)    
+
+
 def error(message: str):
     """Log an error message. Equals to log(ERROR, msg)."""
     _root_logger.log(Level.ERROR, message)

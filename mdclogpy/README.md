@@ -25,7 +25,8 @@ out of the process.
 
 *Example log output*
 
-`{"ts": 1559285893047, "crit": "INFO", "id": "myprog", "mdc": {"second key":"other value","mykey":"keyval"}, "msg": "Hello world!"}`
+`{"ts": 1603103945651, "crit": "ERROR", "id": "test.py", "mdc": {"SYSTEM_NAME": "Cloud-Space", "HOST_NAME": "master", "SERVICE_NAME": "TestApp", "CONTAINER_NAME": "", "POD_NAME": ""}, "msg": "Hello World!"}`
+
 
 Install
 -------
@@ -51,6 +52,7 @@ The library can be used in two ways shown below.
 
 ```python
   import mdclogpy
+  mdclogpy.mdclog_format_init(configmap_monitor=True) 
   mdclogpy.error("This is an error log")
 ```
 
@@ -59,10 +61,15 @@ The library can be used in two ways shown below.
 ```python
   from mdclogpy import Logger
   my_logger = Logger()
+  my_logger.mdclog_format_init(configmap_monitor=True)
   my_logger.error("This is an error log")
 ```
 
 A program can create several logger instances.
+
+mdclog_format_init() Adds the MDC log format with HostName, PodName, ContainerName, ServiceName,PID,CallbackNotifyforLogFieldChange
+
+Pass configmap_monitor = False in mdclog_format_init() function to stop dynamic log level change based on configmap.
 
 
 Mapped Diagnostics Context
