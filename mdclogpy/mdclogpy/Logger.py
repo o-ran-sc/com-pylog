@@ -76,7 +76,7 @@ class Logger():
     # Pass configmap_monitor = True to monitor configmap to change logs dynamically using configmap
     def mdclog_format_init(self,configmap_monitor=False):
 
-        self.mdc = {"SYSTEM_NAME":"","HOST_NAME":"","SERVICE_NAME":"","CONTAINER_NAME":"","POD_NAME":""}
+        self.mdc = {"PID":"","SYSTEM_NAME":"","HOST_NAME":"","SERVICE_NAME":"","CONTAINER_NAME":"","POD_NAME":""}
         self.get_env_params_values()
         try:
             self.filename = os.environ['CONFIG_MAP_NAME']
@@ -182,6 +182,10 @@ class Logger():
             self.mdc['POD_NAME'] = os.environ['POD_NAME']
         except:
             self.mdc['POD_NAME'] = ""
+        try:
+            self.mdc['PID'] = os.getpid()
+        except:
+            self.mdc['PID'] = ""
 
 
     

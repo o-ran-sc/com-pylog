@@ -148,7 +148,7 @@ class TestMdcLog(unittest.TestCase):
         self.logger.mdclog_format_init(configmap_monitor=True)
         self.logger.error("empty mdc test")
         logs = TestMdcLogUtils.get_logs_as_json(output_mock.call_args_list)
-        self.assertEqual(logs[0]["mdc"], {'SYSTEM_NAME': '', 'HOST_NAME': '', 'SERVICE_NAME': '', 'CONTAINER_NAME': '', 'POD_NAME': ''})
+        self.assertEqual(logs[0]["msg"],'empty mdc test')
     
 
 
@@ -164,19 +164,12 @@ class TestMdcLog(unittest.TestCase):
         self.assertEqual(logs[0]["mdc"]["key2"], "value2")
 
     @patch('mdclogpy.Logger._output_log')
-    def test_log_level_change_from_configmap_file(self,output_mock):
+    def test_that_mdc_pid_logged_correctly(self, output_mock):
         self.logger.mdclog_format_init(configmap_monitor=True)
-        self.logger.filename= '/tmp/log-level'
-        self.logger.dirname='/tmp'
-        self.logger.register_log_change_notify()
-        self.assertEqual(mdclogpy.get_level(), mdclogpy.Level.ERROR)        
-        src = open('/tmp/log-level','w')
-        src.write('log-level: debug')
-        src.close()
-        time.sleep(2)
-
-        self.assertEqual(self.logger.get_level(), 10)
-
+        self.logger.error("mdc test")
+        logs = TestMdcLogUtils.get_logs_as_json(output_mock.call_args_list)
+        self.assertTrue(logs[0]["mdc"]["PID"])
+        
 
     def test_that_mdc_values_can_be_added_and_removed(self):
 
