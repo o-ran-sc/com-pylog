@@ -40,4 +40,5 @@ setup(name='mdclogpy',
       author='kturunen',
       license='Apache Software License',
       packages=['mdclogpy'],
+      install_requires=['inotify'],
       zip_safe=False)

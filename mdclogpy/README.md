@@ -25,7 +25,7 @@ out of the process.
 
 *Example log output*
 
-`{"ts": 1603103945651, "crit": "ERROR", "id": "test.py", "mdc": {"SYSTEM_NAME": "Cloud-Space", "HOST_NAME": "master", "SERVICE_NAME": "TestApp", "CONTAINER_NAME": "", "POD_NAME": ""}, "msg": "Hello World!"}`
+`{"ts": 1603103945651, "crit": "ERROR", "id": "test.py", "mdc": {"PID":101,"SYSTEM_NAME": "Cloud-Space", "HOST_NAME": "master", "SERVICE_NAME": "TestApp", "CONTAINER_NAME": "", "POD_NAME": ""}, "msg": "Hello World!"}`
 
 
 Install

@@ -66,7 +66,7 @@ out of the process.
 
 *Example log output*
 
-`{"ts": 1603103945651, "crit": "ERROR", "id": "test.py", "mdc": {"SYSTEM_NAME": "Cloud-Space", "HOST_NAME": "master", "SERVICE_NAME": "TestApp", "CONTAINER_NAME": "Container-101", "POD_NAME": "POD-101"}, "msg": "Hello World!"}`
+`{"ts": 1603103945651, "crit": "ERROR", "id": "test.py", "mdc": {"PID":101,"SYSTEM_NAME": "Cloud-Space", "HOST_NAME": "master", "SERVICE_NAME": "TestApp", "CONTAINER_NAME": "Container-101", "POD_NAME": "POD-101"}, "msg": "Hello World!"}`
 
 Install
 -------
@@ -171,7 +171,7 @@ Pylog API's
  def clean_mdc(self):
 
 
-7. Initialise Sep Logging format: 
+7. Initialise Logging format: 
 
 This api Initialzes mdclog print format using MDC Dictionary by extracting the environment variables in the calling process for “SYSTEM_NAME”, “HOST_NAME”, “SERVICE_NAME”, “CONTAINER_NAME”, “POD_NAME” & “CONFIG_MAP_NAME” mapped to HostName, ServiceName, ContainerName, Podname and Configuration-file-name of the services respectively.
 
