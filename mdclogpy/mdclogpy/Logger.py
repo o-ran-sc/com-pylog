@@ -81,6 +81,8 @@ class Logger():
         try:
             self.filename = os.environ['CONFIG_MAP_NAME']
             self.dirname = str(self.filename[:self.filename.rindex('/')])
+            self.parse_file()
+
             if configmap_monitor == True:
                 self.register_log_change_notify()
             
@@ -190,7 +192,7 @@ class Logger():
 
     
     def update_mdc_log_level_severity(self,level):
-        severity_level = Level.DEBUG
+        severity_level = Level.ERROR
 
         if(level == ""):
             print("Invalid Log Level defined in ConfigMap")
