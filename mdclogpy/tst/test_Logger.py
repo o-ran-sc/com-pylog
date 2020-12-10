@@ -151,6 +151,18 @@ class TestMdcLog(unittest.TestCase):
         self.assertEqual(logs[0]["msg"],'empty mdc test')
     
 
+    @patch('mdclogpy.Logger._output_log')
+    def test_that_config_map_is_monitored_correctly(self, output_mock):
+        src = open("//tmp//log","w")
+        src.write("log-level: debug\n")
+        src.close()
+        self.logger.filename = "/tmp/log"
+        self.logger.dirname = "/tmp/"
+        self.logger.mdc = {"PID":"","SYSTEM_NAME":"","HOST_NAME":"","SERVICE_NAME":"","CONTAINER_NAME":"","POD_NAME":""}
+        self.logger.get_env_params_values()
+        self.logger.parse_file()
+        self.logger.error("Hello")
+        self.assertEqual(self.logger.get_level(),Level.DEBUG)
 
     @patch('mdclogpy.Logger._output_log')
     def test_that_mdc_values_are_logged_correctly(self, output_mock):
