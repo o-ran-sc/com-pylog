@@ -25,7 +25,7 @@ def readme():
         return f.read()
 
 setup(name='mdclogpy',
-      version='1.1.1',
+      version='1.1.2',
       description='Structured logging library with Mapped Diagnostic Context',
       long_description=readme(),
       long_description_content_type="text/markdown",

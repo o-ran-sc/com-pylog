@@ -34,7 +34,7 @@ Release-Notes
 =============
 
 
-This document provides the release notes for release 1.1.1 of pylog.
+This document provides the release notes for pylog.
 
 .. contents::
    :depth: 3
@@ -49,6 +49,9 @@ Version history
 |                    |                    |                    |                    |
 +--------------------+--------------------+--------------------+--------------------+
 | 2019-11-05         | 1.1.1              | R Riska            | First version      |
+|                    |                    |                    |                    |
++--------------------+--------------------+--------------------+--------------------+
+| 2020-12-11         | 1.1.2              | Ranjit/Abdulwahid  | Second version     |
 |                    |                    |                    |                    |
 +--------------------+--------------------+--------------------+--------------------+
 
@@ -72,6 +75,8 @@ This is the first version of this package.
 
 Feature Additions
 ^^^^^^^^^^^^^^^^^
+
+New API added for initialising the log format.
 
 
 Bug Corrections
