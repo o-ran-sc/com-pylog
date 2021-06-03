@@ -194,8 +194,6 @@ class TestMdcLog(unittest.TestCase):
         self.logger.clean_mdc()
         self.assertEqual(self.logger.get_mdc("key2"), None)
 
-
-
     @patch('mdclogpy.Logger._output_log')
     def test_update_mdc_log_level_severity(self, output_mock):
        self.logger.update_mdc_log_level_severity("error")
