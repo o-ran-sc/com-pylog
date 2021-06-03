@@ -142,15 +142,13 @@ class TestMdcLog(unittest.TestCase):
         logs = TestMdcLogUtils.get_logs_as_json(output_mock.call_args_list)
         self.assertEqual(logs[0]["msg"], '\ and "')
 
-
     @patch('mdclogpy.Logger._output_log')
     def test_that_empty_mdc_is_logged_correctly(self, output_mock):
         self.logger.mdclog_format_init(configmap_monitor=True)
         self.logger.error("empty mdc test")
         logs = TestMdcLogUtils.get_logs_as_json(output_mock.call_args_list)
         self.assertEqual(logs[0]["msg"],'empty mdc test')
-    
-
+ 
     @patch('mdclogpy.Logger._output_log')
     def test_that_config_map_is_monitored_correctly(self, output_mock):
         src = open("//tmp//log","w")
@@ -195,6 +193,26 @@ class TestMdcLog(unittest.TestCase):
         self.logger.remove_mdc("non_existent")
         self.logger.clean_mdc()
         self.assertEqual(self.logger.get_mdc("key2"), None)
+
+
+
+    @patch('mdclogpy.Logger._output_log')
+    def test_update_mdc_log_level_severity(self, output_mock):
+       self.logger.update_mdc_log_level_severity("error")
+       self.logger.update_mdc_log_level_severity("warning")
+       self.logger.update_mdc_log_level_severity("info")
+       self.logger.update_mdc_log_level_severity("debug")
+       self.logger.update_mdc_log_level_severity("")
+
+    @patch('mdclogpy.Logger._output_log')
+    def test_output_log(self, output_mock):
+        self.logger._output_log("Logger")
+
+    @patch('mdclogpy.Logger._output_log')
+    def test_register_log_change_notify(self, output_mock):
+        self.logger.dirname = "/tmp/"
+        self.logger.filename = "/tmp/log"
+        self.logger.register_log_change_notify()
 
     @patch('mdclogpy.Logger._output_log')
     def test_multiple_logger_instances(self, output_mock):
