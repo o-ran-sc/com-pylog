@@ -70,22 +70,14 @@ jobs:
       - name: Allow replication
         run: sleep 10s
 
-  call-gerrit-tox-and-sonarcloud:
+  call-sonarcloud-scan:
     runs-on: ubuntu-latest
     needs: notify
-    strategy:
-      matrix:
-        tox-env: ["docs","docs-linkcheck"]
     steps:
       - uses: actions/checkout@v4
         with:
           ref: ${{ inputs.GERRIT_BRANCH }}
           submodules: "true"
-      - name: Run Tox verify
-        # yamllint disable-line rule:line-length
-        uses: lfit/releng-reusable-workflows/.github/actions/tox-run-action@main
-        with:
-          tox-envs: ${{ matrix.tox-env }}
       - name: Run SonarCloud Scan
         uses: sonarsource/sonarcloud-github-action@master
         env:
@@ -103,7 +95,7 @@ jobs:
 
   report-status:
     if: ${{ always() }}
-    needs: [notify, call-gerrit-tox-and-sonarcloud]
+    needs: [notify, call-sonarcloud-scan]
     runs-on: ubuntu-latest
     steps:
       - name: Get workflow conclusion
