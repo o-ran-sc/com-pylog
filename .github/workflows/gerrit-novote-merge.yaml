@@ -82,7 +82,7 @@ jobs:
         # yamllint disable-line rule:line-length
         uses: lfit/releng-reusable-workflows/.github/actions/tox-run-action@main
         with:
-          tox-envs: '["py3"]'
+          tox-envs: '["docs","docs-linkcheck"]'
       - name: Run SonarCloud Scan
         uses: sonarsource/sonarcloud-github-action@master
         env:
