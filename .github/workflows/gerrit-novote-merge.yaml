@@ -52,7 +52,7 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
-  notify:
+  call-gerrit-tox-and-sonarcloud:
     runs-on: ubuntu-latest
     steps:
       - name: Notify job start
@@ -69,11 +69,6 @@ jobs:
           comment-only: true
       - name: Allow replication
         run: sleep 10s
-
-  call-gerrit-tox-and-sonarcloud:
-    runs-on: ubuntu-latest
-    needs: notify
-    steps:
       - name: Run Tox verify
         # yamllint disable-line rule:line-length
         uses: lfit/releng-reusable-workflows/.github/actions/tox-run-action@main
@@ -97,7 +92,7 @@ jobs:
 
   report-status:
     if: ${{ always() }}
-    needs: [notify, call-gerrit-tox-and-sonarcloud]
+    needs: [call-gerrit-tox-and-sonarcloud]
     runs-on: ubuntu-latest
     steps:
       - name: Get workflow conclusion
