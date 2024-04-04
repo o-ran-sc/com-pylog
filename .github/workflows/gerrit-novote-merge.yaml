@@ -97,7 +97,7 @@ jobs:
 
   report-status:
     if: ${{ always() }}
-    needs: [notify, call-gerrit-tox-sonarcloud]
+    needs: [notify, call-gerrit-tox-and-sonarcloud]
     runs-on: ubuntu-latest
     steps:
       - name: Get workflow conclusion
