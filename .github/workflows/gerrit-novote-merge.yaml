@@ -85,8 +85,6 @@ jobs:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
         with:
           args:
-          SONAR_PROJECT_KEY: "o-ran-sc_com-pylog"
-          SONAR_ORG: "o-ran-sc"
           SONAR_ARGS: >
             -Dsonar.build.sourceEncoding=UTF-8
             -Dsonar.organization=o-ran-sc
@@ -96,8 +94,6 @@ jobs:
             -Dsonar.python.coverage.reportPaths=./coverage.xm
             -Dsonar.sources=mdclogpy
             -Dsonar.verbose=true
-        secrets:
-          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
 
   report-status:
     if: ${{ always() }}
