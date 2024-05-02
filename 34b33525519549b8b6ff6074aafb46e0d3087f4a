@@ -1,0 +1,8 @@
+Verified+1: o-ran-sc release <collab-it+o-ran-sc-release@linuxfoundation.org>
+Code-Review+2: Abdul Wahid W <abdulwahid.w@nokia.com>
+Verified+1: ORAN Required GHA <releng+oran.required.gha@linuxfoundation.org>
+Submitted-by: Abdul Wahid W <abdulwahid.w@nokia.com>
+Submitted-at: Thu, 02 May 2024 06:43:34 +0000
+Reviewed-on: https://gerrit.o-ran-sc.org/r/c/com/pylog/+/12831
+Project: com/pylog
+Branch: refs/heads/master
